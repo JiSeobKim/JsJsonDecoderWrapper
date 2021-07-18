@@ -1,124 +1,125 @@
 import Foundation
 import UIKit
 
-protocol JSONDefaultWrapperAvailable {
+public protocol JSONDefaultWrapperAvailable {
     associatedtype ValueType: Decodable
     static var defaultValue: ValueType { get }
 }
 
-protocol JSONStringConverterAvailable {
+public protocol JSONStringConverterAvailable {
     static var defaultValue: Bool { get }
 }
 
-typealias EmptyString = JSONDefaultWrapper.Wrapper<JSONDefaultWrapper.TypeCase.EmptyString>
-
 public enum JSONDefaultWrapper {
-    typealias EmptyString = Wrapper<JSONDefaultWrapper.TypeCase.EmptyString>
-    typealias True = Wrapper<JSONDefaultWrapper.TypeCase.True>
-    typealias False = Wrapper<JSONDefaultWrapper.TypeCase.False>
-    typealias IntZero = Wrapper<JSONDefaultWrapper.TypeCase.Zero<Int>>
-    typealias DoubleZero = Wrapper<JSONDefaultWrapper.TypeCase.Zero<Double>>
-    typealias FloatZero = Wrapper<JSONDefaultWrapper.TypeCase.Zero<Float>>
-    typealias CGFloatZero = Wrapper<JSONDefaultWrapper.TypeCase.Zero<CGFloat>>
-    typealias StringFalse = StringConverterWrapper<JSONDefaultWrapper.TypeCase.StringFalse>
-    typealias StringTrue = StringConverterWrapper<JSONDefaultWrapper.TypeCase.StringTrue>
-    typealias EmptyList<T: Decodable & ExpressibleByArrayLiteral> = Wrapper<JSONDefaultWrapper.TypeCase.List<T>>
-    typealias EmptyDict<T: Decodable & ExpressibleByDictionaryLiteral> = Wrapper<JSONDefaultWrapper.TypeCase.Dict<T>>
+    public typealias EmptyString = Wrapper<JSONDefaultWrapper.TypeCase.EmptyString>
+    public typealias True = Wrapper<JSONDefaultWrapper.TypeCase.True>
+    public typealias False = Wrapper<JSONDefaultWrapper.TypeCase.False>
+    public typealias IntZero = Wrapper<JSONDefaultWrapper.TypeCase.Zero<Int>>
+    public typealias DoubleZero = Wrapper<JSONDefaultWrapper.TypeCase.Zero<Double>>
+    public typealias FloatZero = Wrapper<JSONDefaultWrapper.TypeCase.Zero<Float>>
+    public typealias CGFloatZero = Wrapper<JSONDefaultWrapper.TypeCase.Zero<CGFloat>>
+    public typealias StringFalse = StringConverterWrapper<JSONDefaultWrapper.TypeCase.StringFalse>
+    public typealias StringTrue = StringConverterWrapper<JSONDefaultWrapper.TypeCase.StringTrue>
+    public typealias EmptyList<T: Decodable & ExpressibleByArrayLiteral> = Wrapper<JSONDefaultWrapper.TypeCase.List<T>>
+    public typealias EmptyDict<T: Decodable & ExpressibleByDictionaryLiteral> = Wrapper<JSONDefaultWrapper.TypeCase.Dict<T>>
     
     // Property Wrapper - Optional Type to Type
     @propertyWrapper
-    struct Wrapper<T: JSONDefaultWrapperAvailable> {
-        typealias ValueType = T.ValueType
+    public struct Wrapper<T: JSONDefaultWrapperAvailable> {
+        public typealias ValueType = T.ValueType
 
-        var wrappedValue: ValueType
+        public var wrappedValue: ValueType
 
-        init() {
-        wrappedValue = T.defaultValue
+        public init() {
+            wrappedValue = T.defaultValue
         }
     }
     
     // Property Wrapper - Optional String To Bool
     @propertyWrapper
-    struct StringConverterWrapper<T: JSONStringConverterAvailable> {
-        var wrappedValue: Bool = T.defaultValue
+    public struct StringConverterWrapper<T: JSONStringConverterAvailable> {
+        public var wrappedValue: Bool = T.defaultValue
+        public init() {
+            wrappedValue = T.defaultValue
+        }
     }
     
     // Property Wrapper - Optional Timestamp to Optinoal Date
     @propertyWrapper
     struct TimestampToOptionalDate {
-        var wrappedValue: Date?
+        public var wrappedValue: Date?
     }
     
     @propertyWrapper
     struct TrueByStringToBool {
-        var wrappedValue: Bool = true
+        public var wrappedValue: Bool = true
     }
     
     @propertyWrapper
     struct FalseByStringToBool {
-        var wrappedValue: Bool = false
+        public var wrappedValue: Bool = false
     }
 
-    enum TypeCase {
+    public enum TypeCase {
         // Type Enums
-        enum True: JSONDefaultWrapperAvailable {
+        public enum True: JSONDefaultWrapperAvailable {
             // 기본값 - true
-            static var defaultValue: Bool { true }
+            public static var defaultValue: Bool { true }
         }
 
-        enum False: JSONDefaultWrapperAvailable {
+        public enum False: JSONDefaultWrapperAvailable {
             // 기본값 - false
-            static var defaultValue: Bool { false }
+            public static var defaultValue: Bool { false }
         }
 
-        enum EmptyString: JSONDefaultWrapperAvailable {
+        public enum EmptyString: JSONDefaultWrapperAvailable {
             // 기본값 - ""
-            static var defaultValue: String { "" }
+            public static var defaultValue: String { "" }
         }
         
-        enum Zero<T: Decodable>: JSONDefaultWrapperAvailable where T: Numeric {
+        public enum Zero<T: Decodable>: JSONDefaultWrapperAvailable where T: Numeric {
             // 기본값 - 0
-            static var defaultValue: T { 0 }
+            public static var defaultValue: T { 0 }
         }
         
-        enum StringFalse: JSONStringConverterAvailable {
+        public enum StringFalse: JSONStringConverterAvailable {
             // 기본값 - false
-            static var defaultValue: Bool { false }
+            public static var defaultValue: Bool { false }
         }
         
-        enum StringTrue: JSONStringConverterAvailable {
+        public enum StringTrue: JSONStringConverterAvailable {
             // 기본값 - false
-            static var defaultValue: Bool { true }
+            public static var defaultValue: Bool { true }
         }
         
-        enum List<T: Decodable & ExpressibleByArrayLiteral>: JSONDefaultWrapperAvailable {
+        public enum List<T: Decodable & ExpressibleByArrayLiteral>: JSONDefaultWrapperAvailable {
             // 기본값 - []
-            static var defaultValue: T { [] }
+            public static var defaultValue: T { [] }
         }
         
-        enum Dict<T: Decodable & ExpressibleByDictionaryLiteral>: JSONDefaultWrapperAvailable {
+        public enum Dict<T: Decodable & ExpressibleByDictionaryLiteral>: JSONDefaultWrapperAvailable {
             // 기본값 - [:]
-            static var defaultValue: T { [:] }
+            public static var defaultValue: T { [:] }
         }
     }
 }
 
 extension JSONDefaultWrapper.Wrapper: Decodable {
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         self.wrappedValue = try container.decode(ValueType.self)
     }
 }
 
 extension JSONDefaultWrapper.StringConverterWrapper: Decodable {
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         self.wrappedValue = (try container.decode(String.self)) == "Y"
     }
 }
 
 extension JSONDefaultWrapper.TimestampToOptionalDate: Decodable {
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let timestamp = try container.decode(Double.self)
         let date = Date.init(timeIntervalSince1970: timestamp)
