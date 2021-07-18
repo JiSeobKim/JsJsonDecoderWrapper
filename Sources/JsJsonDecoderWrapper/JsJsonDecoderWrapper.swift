@@ -38,7 +38,8 @@ public enum JSONDecoderWrapper {
     // Property Wrapper - Optional String To Bool
     @propertyWrapper
     public struct StringConverterWrapper<T: JSONStringConverterAvailable> {
-        public var wrappedValue: Bool = T.defaultValue
+        public typealias ValueType = Bool
+        public var wrappedValue: ValueType = T.defaultValue
         public init() {
             wrappedValue = T.defaultValue
         }
@@ -46,18 +47,11 @@ public enum JSONDecoderWrapper {
     
     // Property Wrapper - Optional Timestamp to Optinoal Date
     @propertyWrapper
-    struct TimestampToOptionalDate {
+    public struct TimestampToOptionalDate {
         public var wrappedValue: Date?
-    }
-    
-    @propertyWrapper
-    struct TrueByStringToBool {
-        public var wrappedValue: Bool = true
-    }
-    
-    @propertyWrapper
-    struct FalseByStringToBool {
-        public var wrappedValue: Bool = false
+        public init() {
+            wrappedValue = nil
+        }
     }
 
     public enum TypeCase {
