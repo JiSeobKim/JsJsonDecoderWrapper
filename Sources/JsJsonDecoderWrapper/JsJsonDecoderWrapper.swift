@@ -119,15 +119,15 @@ extension JSONDecoderWrapper.TimestampToOptionalDate: Decodable {
 }
 
 extension KeyedDecodingContainer {
-    func decode<T: JSONDecoderWrapperAvailable>(_ type: JSONDecoderWrapper.Wrapper<T>.Type, forKey key: Key) throws -> JSONDecoderWrapper.Wrapper<T> {
+    public func decode<T: JSONDecoderWrapperAvailable>(_ type: JSONDecoderWrapper.Wrapper<T>.Type, forKey key: Key) throws -> JSONDecoderWrapper.Wrapper<T> {
         try decodeIfPresent(type, forKey: key) ?? .init()
     }
     
-    func decode<T: JSONStringConverterAvailable>(_ type: JSONDecoderWrapper.StringConverterWrapper<T>.Type, forKey key: Key) throws -> JSONDecoderWrapper.StringConverterWrapper<T> {
+    public func decode<T: JSONStringConverterAvailable>(_ type: JSONDecoderWrapper.StringConverterWrapper<T>.Type, forKey key: Key) throws -> JSONDecoderWrapper.StringConverterWrapper<T> {
         try decodeIfPresent(type, forKey: key) ?? .init()
     }
     
-    func decode(_ type: JSONDecoderWrapper.TimestampToOptionalDate.Type, forKey key: Key) throws -> JSONDecoderWrapper.TimestampToOptionalDate {
+    public func decode(_ type: JSONDecoderWrapper.TimestampToOptionalDate.Type, forKey key: Key) throws -> JSONDecoderWrapper.TimestampToOptionalDate {
         try decodeIfPresent(type, forKey: key) ?? .init()
     }
 }
