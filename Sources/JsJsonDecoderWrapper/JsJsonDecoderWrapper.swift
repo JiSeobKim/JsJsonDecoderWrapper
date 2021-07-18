@@ -10,6 +10,8 @@ protocol JSONStringConverterAvailable {
     static var defaultValue: Bool { get }
 }
 
+typealias EmptyString = JSONDefaultWrapper.Wrapper<JSONDefaultWrapper.TypeCase.EmptyString>
+
 public enum JSONDefaultWrapper {
     typealias EmptyString = Wrapper<JSONDefaultWrapper.TypeCase.EmptyString>
     typealias True = Wrapper<JSONDefaultWrapper.TypeCase.True>
