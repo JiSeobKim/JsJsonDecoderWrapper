@@ -4,18 +4,18 @@
     final class JsJsonDecoderWrapperTests: XCTestCase {
         class Posting: Decodable {
             // Property Wrapper를 이용한 프로퍼티
-            @JSONDefaultWrapper.EmptyString var stringValue: String
-            @JSONDefaultWrapper.True var trueValue: Bool
-            @JSONDefaultWrapper.False var falseValue: Bool
-            @JSONDefaultWrapper.IntZero var intValue: Int
-            @JSONDefaultWrapper.DoubleZero var doubleValue: Double
-            @JSONDefaultWrapper.FloatZero var floatValue: Float
-            @JSONDefaultWrapper.CGFloatZero var cGFloatValue: CGFloat
-            @JSONDefaultWrapper.StringFalse var stringFalseValue: Bool
-            @JSONDefaultWrapper.StringTrue var stringTrueValue: Bool
-            @JSONDefaultWrapper.TimestampToOptionalDate var dateValue: Date?
-            @JSONDefaultWrapper.EmptyList var listValue: [Int]
-            @JSONDefaultWrapper.EmptyDict var dictValue: [String:String]
+            @JSONDecoderWrapper.EmptyString var stringValue: String
+            @JSONDecoderWrapper.True var trueValue: Bool
+            @JSONDecoderWrapper.False var falseValue: Bool
+            @JSONDecoderWrapper.IntZero var intValue: Int
+            @JSONDecoderWrapper.DoubleZero var doubleValue: Double
+            @JSONDecoderWrapper.FloatZero var floatValue: Float
+            @JSONDecoderWrapper.CGFloatZero var cGFloatValue: CGFloat
+            @JSONDecoderWrapper.StringFalse var stringFalseValue: Bool
+            @JSONDecoderWrapper.StringTrue var stringTrueValue: Bool
+            @JSONDecoderWrapper.TimestampToOptionalDate var dateValue: Date?
+            @JSONDecoderWrapper.EmptyList var listValue: [Int]
+            @JSONDecoderWrapper.EmptyDict var dictValue: [String:String]
         }
         func testExample() {
                 // 전혀 상관없는 JSON 형태의 데이터
