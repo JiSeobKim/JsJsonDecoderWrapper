@@ -27,9 +27,7 @@ public enum JSONDecoderWrapper {
     @propertyWrapper
     public struct Wrapper<T: JSONDecoderWrapperAvailable> {
         public typealias ValueType = T.ValueType
-
         public var wrappedValue: ValueType
-
         public init() {
             wrappedValue = T.defaultValue
         }
@@ -38,8 +36,7 @@ public enum JSONDecoderWrapper {
     // Property Wrapper - Optional String To Bool
     @propertyWrapper
     public struct StringConverterWrapper<T: JSONStringConverterAvailable> {
-        public typealias ValueType = Bool
-        public var wrappedValue: ValueType = T.defaultValue
+        public var wrappedValue: Bool = T.defaultValue
         public init() {
             wrappedValue = T.defaultValue
         }
@@ -118,5 +115,19 @@ extension JSONDecoderWrapper.TimestampToOptionalDate: Decodable {
         let timestamp = try container.decode(Double.self)
         let date = Date.init(timeIntervalSince1970: timestamp)
         self.wrappedValue = date
+    }
+}
+
+extension KeyedDecodingContainer {
+    func decode<T: JSONDecoderWrapperAvailable>(_ type: JSONDecoderWrapper.Wrapper<T>.Type, forKey key: Key) throws -> JSONDecoderWrapper.Wrapper<T> {
+        try decodeIfPresent(type, forKey: key) ?? .init()
+    }
+    
+    func decode<T: JSONStringConverterAvailable>(_ type: JSONDecoderWrapper.StringConverterWrapper<T>.Type, forKey key: Key) throws -> JSONDecoderWrapper.StringConverterWrapper<T> {
+        try decodeIfPresent(type, forKey: key) ?? .init()
+    }
+    
+    func decode(_ type: JSONDecoderWrapper.TimestampToOptionalDate.Type, forKey key: Key) throws -> JSONDecoderWrapper.TimestampToOptionalDate {
+        try decodeIfPresent(type, forKey: key) ?? .init()
     }
 }
