@@ -1,0 +1,6 @@
+use_frameworks!
+target 'Js_JsonDecoderWrapper_Tests' do
+  pod 'Js_JsonDecoderWrapper', :path => '../'
+  
+  
+end

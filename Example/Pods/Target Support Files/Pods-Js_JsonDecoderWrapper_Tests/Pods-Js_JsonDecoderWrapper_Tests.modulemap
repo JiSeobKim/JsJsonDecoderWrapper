@@ -1,0 +1,6 @@
+framework module Pods_Js_JsonDecoderWrapper_Tests {
+  umbrella header "Pods-Js_JsonDecoderWrapper_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}

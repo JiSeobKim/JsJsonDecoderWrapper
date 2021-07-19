@@ -1,0 +1,16 @@
+PODS:
+  - Js_JsonDecoderWrapper (0.1.0)
+
+DEPENDENCIES:
+  - Js_JsonDecoderWrapper (from `../`)
+
+EXTERNAL SOURCES:
+  Js_JsonDecoderWrapper:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Js_JsonDecoderWrapper: 655e97777e9c26ad70fb0b62461cceae1a81fdb0
+
+PODFILE CHECKSUM: 489b94243f4752a66a15d3e50ff29a9ed03e3803
+
+COCOAPODS: 1.10.1

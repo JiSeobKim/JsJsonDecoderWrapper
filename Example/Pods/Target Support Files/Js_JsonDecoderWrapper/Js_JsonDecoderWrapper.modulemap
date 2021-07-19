@@ -1,0 +1,6 @@
+framework module Js_JsonDecoderWrapper {
+  umbrella header "Js_JsonDecoderWrapper-umbrella.h"
+
+  export *
+  module * { export * }
+}
